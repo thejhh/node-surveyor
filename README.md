@@ -1,4 +1,4 @@
-node-survey-gatherer
-====================
+node-surveyor
+=============
 
-Survey Gatherer is an app for online surveys and other web questionnaires
+Surveyor is a Node.js module for implementing online surveys and other web questionnaires.
