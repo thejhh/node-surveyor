@@ -1,5 +1,5 @@
-
-/* Surveyor 
+/* 
+ * Surveyor 
  * Copyright 2013 Jaakko-Heikki Heusala <jheusala@iki.fi>
  */
 
@@ -13,7 +13,12 @@ function module_handler (config) {
 	}
 	
 	if(config.survey && (typeof config.survey === 'function')) {
-		return create_app(config.survey(new Survey()));
+		var s = config.survey(new Survey());
+		if(s && (typeof s === 'object')) {
+			return create_app(config, config.survey(new Survey()));
+		} else {
+			throw new Error('unexpected result from config.app(): ' + (typeof s));
+		}
 	} else {
 		throw new Error('surveyor(arg).survey called with non-function argument!');
 	}

@@ -11,9 +11,9 @@ var do_index = function(req, res){
 };
 
 /** Survey object constructor */
-function create_app(config) {
+function create_app(config, survey) {
 	if(config === undefined) {
-		throw new Error("create_app called without configuration!");
+		throw new Error("create_app called without config!");
 	}
 
 	var app = express();
