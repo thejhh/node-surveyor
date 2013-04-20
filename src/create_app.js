@@ -7,6 +7,7 @@ var express = require('express'),
 
 /* Request */
 var do_index = function(req, res){
+	// FIXME: If requested like http://localhost:3000/survey, should relocate to http://localhost:3000/survey/ !
 	res.render('index', { title: 'Survey' });
 };
 
@@ -37,6 +38,7 @@ function create_app(config, survey) {
 	if ('development' === app.get('env')) {
 	    app.use(express.errorHandler());
 	}
+
 	app.get('/',  do_index );
 
 	return app;
