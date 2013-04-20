@@ -11,9 +11,10 @@ function Survey() {
 }
 
 var special_keys = {
+	"version": { "hidden": true},
 	"header": { "hidden": true},
 	"footer": { "hidden": true},
-	"end": { "hidden": true}
+	"end": { "hidden": false}
 };
 
 /** Simple get/set helper */
@@ -80,7 +81,9 @@ function _getset_helper(self, args, key) {
 		throw new Error("ID exists already!");
 	}
 
+	obj._key = key;
 	self._keys[key] = obj;
+	
 	if(!obj.hidden) {
 		self._data.push(obj);
 	}
@@ -109,6 +112,34 @@ Survey.prototype.end = function(value) {
 /** Get/set other */
 Survey.prototype.add = function() {
 	return _getset_helper(this, arguments);
+};
+
+/** Get one or more item by key(s). You can submit any number of keys or arrays of keys. */
+Survey.prototype.get = function() {
+	var self = this;
+	var result = {};
+	var args = Array.prototype.slice.call(arguments);
+	function do_array(a) {
+		a.forEach(function(key) {
+			if(key && (typeof key === 'object') && (key instanceof Array) ) {
+				do_array(key);
+			} else {
+				result[key] = self._keys[key];
+			}
+		});
+	}
+	do_array(args);
+	return result;
+};
+
+/** Get available keywords */
+Survey.prototype.keys = function() {
+	var self = this;
+	var result = [];
+	self._data.forEach(function(obj) {
+		result.push( obj._key );
+	});
+	return result;
 };
 
 // Export module

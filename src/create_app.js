@@ -5,12 +5,6 @@
 var express = require('express'),
 	path = require('path');
 
-/* Request */
-var do_index = function(req, res){
-	// FIXME: If requested like http://localhost:3000/survey, should relocate to http://localhost:3000/survey/ !
-	res.render('index', { title: 'Survey' });
-};
-
 /** Survey object constructor */
 function create_app(config, survey) {
 	if(config === undefined) {
@@ -38,6 +32,12 @@ function create_app(config, survey) {
 	if ('development' === app.get('env')) {
 	    app.use(express.errorHandler());
 	}
+
+	/* Request handler */
+	var do_index = function(req, res){
+		// FIXME: If requested like http://localhost:3000/survey, should relocate to http://localhost:3000/survey/ !
+		res.render('index', { title: 'Survey', 'survey': survey });
+	};
 
 	app.get('/',  do_index );
 
